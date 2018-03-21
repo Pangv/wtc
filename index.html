@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/lux/bootstrap.min.css">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+
+    h1 {
+      text-align: center;
+    }
+  </style>
+  <title>Watch the Clock</title>
+</head>
+
+<body>
+  <div id="app" class="container">
+    <h1>9-to-5</h1>
+    <button @click="addRow" class="btn btn-success">
+        Zeile hinzufügen
+        </button>
+    <form>
+      <timeslot v-for="(row, index) in timeslots" v-bind:id="row" v-on:summing="getTotalSum" :key="row" v-on:remove="removeRow(row)"></timeslot>
+    </form>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Gesamtsumme</th>
+          <th scope="col">Pause</th>
+          <th scope="col">Überstunden</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{sumOutput}}</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    {{this.sums}}
+  </div>
+
+  <script type="text/x-template" id="timeslot">
+    <div class="form-row align-items-center">
+      <div class="form-group col-4">
+        <label for="start">Kommen</label>
+        <input id="start" type="time" class="form-control" v-model="vonInput">
+      </div>
+      <div class="form-group col-4">
+        <label for="end">Gehen</label>
+        <input id="end" type="time" class="form-control" v-model="bisInput">
+      </div>
+      <div class="form-group col-auto">
+        <label for="sum">Summe</label>
+        <input id="sum" type="time" class="form-control" disabled="true" style="text-align: right;" v-model="sumOutput" v-bind="sum">
+      </div>
+      <div class="col-auto">
+        <button type="button" class="btn btn-warning" aria-label="Schließen" @click="removeSelf">X</button>
+      </div>
+    </div>
+  </script>
+  <script src="app.js"></script>
+</body>
+
+</html>

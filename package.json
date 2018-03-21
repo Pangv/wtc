@@ -1,0 +1,29 @@
+{
+  "name": "watchtheclock",
+  "version": "0.0.1",
+  "description": "timetracking",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pangv/wtc.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Pangv/wtc/issues"
+  },
+  "homepage": "https://github.com/Pangv/wtc#readme",
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "jquery": "^3.3.1",
+    "moment": "^2.21.0",
+    "underscore": "^1.8.3",
+    "vue": "^2.5.16"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  }
+}
