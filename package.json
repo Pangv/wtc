@@ -4,7 +4,8 @@
   "description": "timetracking",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d dist --source-map"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "vue": "^2.5.16"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0"
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
   }
 }
