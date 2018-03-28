@@ -5,7 +5,7 @@
         Zeile hinzufügen
         </button>
     <form>
-      <timeslot v-for="(row, index) in timeslots" v-bind:id="row" :key="row" v-on:summing="getTotalSum"  v-on:remove="removeRow(row)"></timeslot>
+      <timeslot v-for="(row) in timeslots" :id="row" :key="row" v-on:summing="getTotalSum"  v-on:remove="removeRow(row)"></timeslot>
     </form>
     <table class="table">
       <thead>
@@ -23,7 +23,7 @@
         </tr>
       </tbody>
     </table>
-    {{this.sums.slot}}
+    {{JSON.stringify(this.sums)}}
   </div>
 </template>
 
@@ -49,14 +49,11 @@ export default {
   computed: {
     sumOutput() {
       if (this.sums.length > 0) {
-        let mom = this.sums.reduce((acc, value) => {
-          typeof value.slotsum === "string"
-            ? (value.slotsum = moment(value.slotsum))
-            : console.log(value.slotsum);
-          return acc + value.slotsum;
+        let mom = moment.duration('00:00'); 
+        this.sums.forEach(element => {
+            this.sum = mom.add(moment(element.slotsum));
         });
-        return moment(mom)
-          .add(1, "hours")
+        return moment(this.sum)
           .format(moment.HTML5_FMT.TIME);
       }
     }
@@ -64,7 +61,7 @@ export default {
   methods: {
     addRow() {
       const rnd = Math.floor(Math.random() * 10 + 1);
-      this.timeslots.push(moment().add(rnd, "milliseconds"));
+      this.timeslots.push(moment().add(rnd, "milliseconds").toString());
       $("#addRowButton").prop("disabled", function() {
         return !$(this).prop("disabled");
       });
@@ -85,7 +82,7 @@ export default {
       const unpacked = payload;
       if (this.contains(unpacked)) {
         this.sums.map(item => {
-          if (_.isEqual(unpacked.slot, item.slot)) {
+          if (unpacked.slot === item.slot) {
             const idx = this.sums.findIndex(element => {
               return element.slot === unpacked.slot;
             });

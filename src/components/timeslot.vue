@@ -10,13 +10,13 @@
       </div>
       <div class="form-group col-auto">
         <label for="sum">Summe</label>
-        <input id="sum" type="time" class="form-control" disabled="true" style="text-align: right;" v-model="sumOutput" v-bind="sum">
+        <input id="sum" type="time" class="form-control" disabled="true" style="text-align: right;" v-model="sumOutput">
       </div>
       <div class="col-auto">
         <button type="button" class="btn btn-warning" aria-label="Schließen" @click="removeSelf">X</button>
       </div>
     </div>
-</template>
+</template>s
 
 <script>
 import 'jquery';
@@ -29,7 +29,7 @@ export default {
   name: "timeslot",
   props: {
     id: {
-      type: Object,
+      type: String,
       required: true
     }
   },
@@ -52,7 +52,7 @@ export default {
   watch: {
     von() {
       if (!isNaN(this.bis)) {
-        this.sum = moment(this.bis.diff(this.von));
+        this.sum = moment.duration(this.bis.diff(this.von));
         this.sumOutput = this.sum
           .subtract(1, "hours")
           .format(moment.HTML5_FMT.TIME);
