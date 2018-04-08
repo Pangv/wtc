@@ -64,9 +64,14 @@ export default {
       }
     },
     attendance() {
-      return this.$moment(this.sum).add(
-        this.$moment.duration(this.pauseOutput)
+      if (this.sums.length > 0){
+        return this.$moment(this.sum).add(
+          this.$moment.duration(this.pauseOutput)
       );
+      }else {
+        return this.$moment(this.$moment.duration("00:00:00").asMilliseconds())
+          .utc();
+      }
     },
     attendanceOutput() {
       return this.attendance.utc().format("HH:mm:ss");
@@ -114,7 +119,7 @@ export default {
             .valueOf()
         ) {
           return "00:30";
-        } else {
+        } else if (this.sums.length === 0){
           return "-";
         }
       },
