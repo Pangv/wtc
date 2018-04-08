@@ -1,5 +1,5 @@
 <template>
-  <div class="form-row align-items-center">
+  <div class="form-row align-items-center timeslot">
       <div class="form-group col-4">
         <label for="start">Kommen</label>
         <input id="start" type="time" class="form-control" v-model="vonInput">
@@ -13,20 +13,20 @@
         <input id="sum" type="time" class="form-control" disabled="true" style="text-align: right;" v-model="sumOutput">
       </div>
       <div class="col-auto">
-        <button type="button" class="btn btn-warning" aria-label="Schließen" @click="removeSelf">X</button>
+        <button id="close" type="button" class="close" data-dismiss="modal" aria-label="Close" @click="removeSelf">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     </div>
-</template>s
+</template>
 
 <script>
-import 'jquery';
-import 'bootstrap';
-import _ from 'underscore';
-import * as moment from 'moment';
-import 'moment/locale/de';
+import "jquery";
+import "bootstrap";
+import _ from "underscore";
 
 export default {
-  name: "timeslot",
+  name: "Timeslot",
   props: {
     id: {
       type: String,
@@ -43,34 +43,36 @@ export default {
   },
   computed: {
     von() {
-      return moment(this.vonInput, moment.HTML5_FMT.TIME);
+      return this.$moment(this.vonInput, this.$moment.HTML5_FMT.TIME);
     },
     bis() {
-      return moment(this.bisInput, moment.HTML5_FMT.TIME);
+      return this.$moment(this.bisInput, this.$moment.HTML5_FMT.TIME);
     }
   },
   watch: {
     von() {
       if (!isNaN(this.bis)) {
-        this.sum = moment.duration(this.bis.diff(this.von));
-        this.sumOutput = this.sum
-          .subtract(1, "hours")
-          .format(moment.HTML5_FMT.TIME);
+        this.sum = this.$moment(this.bis.diff(this.von));
+        let copy = this.$moment(this.sum);
+        this.sumOutput = copy
+          .subtract(1, "h")
+          .format(this.$moment.HTML5_FMT.TIME);
       }
     },
     bis() {
       if (!isNaN(this.von)) {
-        this.sum = moment(this.bis.diff(this.von));
-        this.sumOutput = this.sum
-          .subtract(1, "hours")
-          .format(moment.HTML5_FMT.TIME);
+        this.sum = this.$moment(this.bis.diff(this.von));
+        let copy = this.$moment(this.sum);
+        this.sumOutput = copy
+          .subtract(1, "h")
+          .format(this.$moment.HTML5_FMT.TIME);
       }
     },
     sumOutput() {
       this.sum < 0 ? (this.sum = this.sum * -1) : this.sum;
       this.$emit("summing", {
-        slot: this.id,
-        slotsum: this.sum
+        id: this.id,
+        slotsum: this.sum.valueOf()
       });
     }
   },
@@ -82,6 +84,16 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
+.timeslot {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border: 2px solid white;
 
+  #close {
+    color: black;
+    margin-left: 1rem;
+    margin-top: 0.6rem;
+  }
+}
 </style>
