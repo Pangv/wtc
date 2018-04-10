@@ -12,15 +12,15 @@
         <div class="form-group col-12 col-sm">
          <label for="overtime">Geplante Überstunden</label>
           <div class="input-group input-group-sm">
-         <input type="time" name="overtime" class="form-control form-control-sm" id="overtime">
+         <input type="time" name="overtime" class="form-control form-control-sm" disabled="true" id="overtime">
           <div class="input-group-append">
-      <button class="btn btn-sm btn-outline-secondary" type="button"><img src="./assets/ic_refresh_black_24px.svg" alt="refresh"></button>
+      <button class="btn btn-sm btn-outline-secondary" type="button" disabled="true"><img src="./assets/ic_refresh_black_24px.svg" alt="refresh"></button>
           </div>
     </div>
         </div>
        </div>
       <div class="row">
-          <form>
+          <form class="col justify-content-around">
         <timeslot v-for="(row) in timeslots" :id="row" :key="row" v-on:summing="getTotalSum"  v-on:remove="removeRow(row)"></timeslot>
         </form>
       </div>
