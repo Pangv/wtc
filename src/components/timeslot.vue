@@ -1,18 +1,18 @@
 <template>
   <div class="form-row align-items-center timeslot">
-      <div class="form-group col-4">
+      <div class="form-group col-4 col-md-4">
         <label for="start">Kommen</label>
-        <input id="start" type="time" class="form-control" v-model="vonInput">
+        <input id="start" type="time" class="form-control form-control-sm" v-model="vonInput">
       </div>
-      <div class="form-group col-4">
+      <div class="form-group col-4 col-md-4">
         <label for="end">Gehen</label>
-        <input id="end" type="time" class="form-control" v-model="bisInput">
+        <input id="end" type="time" class="form-control form-control-sm" v-model="bisInput">
       </div>
-      <div class="form-group col-auto">
+      <div class="form-group col-4 col-md-3">
         <label for="sum">Summe</label>
-        <input id="sum" type="time" class="form-control" disabled="true" style="text-align: right;" v-model="sumOutput">
+        <input id="sum" type="time" class="form-control form-control-sm" disabled="true" v-model="sumOutput">
       </div>
-      <div class="col-auto">
+      <div class="col-12 col-sm order-first">
         <button id="close" type="button" class="close" data-dismiss="modal" aria-label="Close" @click="removeSelf">
           <span aria-hidden="true">&times;</span>
         </button>

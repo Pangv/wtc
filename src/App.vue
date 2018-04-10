@@ -1,32 +1,53 @@
 <template>
-   <div class="container app">
-    <h1>9-to-5</h1>
-    <button @click="addRow" id="addRowButton" class="btn btn-success">
-        Zeile hinzufügen
-        </button>
-    <form>
-      <timeslot v-for="(row) in timeslots" :id="row" :key="row" v-on:summing="getTotalSum"  v-on:remove="removeRow(row)"></timeslot>
-    </form>
-    <table class="table table-sm">
-      <thead>
-        <tr>
-          <th scope="col">Arbeitszeit</th>
-          <th scope="col">Pause</th>
-          <th scope="col">Anwesenheit</th>
-          <th scope="col">Überstunden</th>
-          <th scope="col"><img src="./assets/ic_alarm_black_24px.svg" alt="" srcset=""></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{sumOutput}}</td> 
-          <td>{{pauseOutput}}</td>
-          <td>{{attendanceOutput}}</td>
-          <td>{{overtimeOutput}}</td>
-          <td>{{alert}}</td>
-        </tr>
-      </tbody>
-    </table>
+   <div class="container-fluid app">
+       <div class="row">
+        <div class="col">
+          <h1>9-to-5</h1>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-12 col-sm-5 my-auto">
+         <button @click="addRow" id="addRowButton" class="btn btn-block btn-success">Zeile hinzufügen</button>
+        </div>
+        <div class="form-group col-12 col-sm">
+         <label for="overtime">Geplante Überstunden</label>
+          <div class="input-group input-group-sm">
+         <input type="time" name="overtime" class="form-control form-control-sm" id="overtime">
+          <div class="input-group-append">
+      <button class="btn btn-sm btn-outline-secondary" type="button"><img src="./assets/ic_refresh_black_24px.svg" alt="refresh"></button>
+          </div>
+    </div>
+        </div>
+       </div>
+      <div class="row">
+          <form>
+        <timeslot v-for="(row) in timeslots" :id="row" :key="row" v-on:summing="getTotalSum"  v-on:remove="removeRow(row)"></timeslot>
+        </form>
+      </div>
+      <div class="row">
+        <div class="col-12 col-sm">
+          <table class="table table-sm table-responsive">
+            <thead>
+              <tr>
+                <th scope="col">Arbeitszeit</th>
+                <th scope="col">Pause</th>
+                <th scope="col">Anwesenheit</th>
+                <th scope="col">Überstunden</th>
+                <th scope="col"><img src="./assets/ic_alarm_black_24px.svg" alt="" srcset=""></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{sumOutput}}</td> 
+                <td>{{pauseOutput}}</td>
+                <td>{{attendanceOutput}}</td>
+                <td>{{overtimeOutput}}</td>
+                <td>{{alert}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -64,13 +85,14 @@ export default {
       }
     },
     attendance() {
-      if (this.sums.length > 0){
+      if (this.sums.length > 0) {
         return this.$moment(this.sum).add(
           this.$moment.duration(this.pauseOutput)
-      );
-      }else {
-        return this.$moment(this.$moment.duration("00:00:00").asMilliseconds())
-          .utc();
+        );
+      } else {
+        return this.$moment(
+          this.$moment.duration("00:00:00").asMilliseconds()
+        ).utc();
       }
     },
     attendanceOutput() {
@@ -119,7 +141,7 @@ export default {
             .valueOf()
         ) {
           return "00:30";
-        } else if (this.sums.length === 0){
+        } else if (this.sums.length === 0) {
           return "-";
         }
       },
