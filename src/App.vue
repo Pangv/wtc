@@ -54,7 +54,6 @@
 <script>
 import $ from "jquery";
 import "bootstrap";
-import _ from "underscore";
 import Timeslot from "./components/timeslot.vue";
 
 export default {

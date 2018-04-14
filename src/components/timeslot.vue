@@ -23,7 +23,6 @@
 <script>
 import "jquery";
 import "bootstrap";
-import _ from "underscore";
 
 export default {
   name: "Timeslot",
